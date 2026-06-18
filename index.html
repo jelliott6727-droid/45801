@@ -117,7 +117,7 @@ function render(id, data){
   note.style.top=data.y+"px";
 
   note.innerHTML = `
-    <span class="delete" onclick="event.stopPropagation(); del('${id}')">×</span>
+  <span class="delete" onclick="event.stopPropagation(); del('${id}')">×</span>
     <b>${data.name}</b>
     <div>${data.text}</div>
     <div class="vote" onclick="vote('${id}',${data.votes})">

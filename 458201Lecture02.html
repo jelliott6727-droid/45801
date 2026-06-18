@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lecture 1 Board</title>
+
+<!-- ✅ Lato font -->
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  font-family:'Lato', sans-serif;
+  background:#eef2f7;
+}
+
+body.lms { font-size:14px; }
+body.presentation { font-size:18px; }
+
+header {
+  background: linear-gradient(135deg, #4a6cf7, #6f8cff);
+  color:white;
+  text-align:center;
+  font-weight:700;
+}
+
+body.lms header {
+  padding:12px;
+  font-size:20px;
+}
+
+body.presentation header {
+  padding:18px;
+  font-size:28px;
+}
+
+#toolbar {
+  display:none;
+  gap:10px;
+  background:white;
+}
+
+body.lms #toolbar { padding:10px; }
+body.presentation #toolbar { padding:16px; }
+
+input {
+  border-radius:8px;
+  border:1px solid #ccc;
+  width:100%;
+}
+
+body.lms input {
+  padding:8px;
+  font-size:14px;
+}
+
+body.presentation input {
+  padding:12px;
+  font-size:18px;
+}
+
+button {

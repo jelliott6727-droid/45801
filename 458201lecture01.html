@@ -2,11 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-<!-- 🔴 CHANGE THIS (optional, for clarity) -->
 <title>Lecture 1 Board</title>
 
-<link href="https://fontscom/css2?family=Lato:wght@300;400;700&display=swap
+<!-- ✅ FIXED FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -25,7 +24,6 @@ header {
   font-weight:700;
 }
 
-/* 🔴 CHANGE THIS (optional display label) */
 body.lms header {
   padding:12px;
   font-size:20px;
@@ -181,7 +179,6 @@ body.presentation #clearBtn {
 
 <body class="lms">
 
-<!-- 🔴 CHANGE THIS (visible header) -->
 <header>Lecture 1 Discussion Board</header>
 
 <button id="modeBtn" onclick="toggleMode()">Switch Mode</button>
@@ -197,7 +194,7 @@ body.presentation #clearBtn {
 <button id="addBtn" onclick="toggleInput()">+</button>
 <button id="clearBtn" onclick="clearBoard()">Delete All Notes</button>
 
-<!-- ✅ Firebase scripts -->
+<!-- ✅ FIXED FIREBASE SCRIPTS -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
@@ -215,7 +212,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* 🔴 🔴 🔴 THIS IS THE MOST IMPORTANT LINE TO CHANGE EACH LECTURE */
+/* 🔴 CHANGE THIS FOR EACH LECTURE */
 const path = "458201lecture01";
 
 const colors = ["#FFD6E0","#D6F0FF","#FFF5BA","#E8FFD6","#E6D6FF"];
@@ -330,124 +327,3 @@ function clearBoard(){
 
 </body>
 </html>
-}
-
-#board {
-  position:relative;
-  height:calc(100vh - 80px);
-  background-image: radial-gradient(#d1d5db 1px, transparent 1px);
-}
-
-body.lms #board { background-size:20px 20px; }
-body.presentation #board { background-size:30px 30px; }
-
-.note {
-  position:absolute;
-  border-radius:12px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.2);
-}
-
-body.lms .note {
-  width:220px;
-  padding:10px;
-}
-
-body.presentation .note {
-  width:300px;
-  padding:16px;
-}
-
-.delete {
-  float:right;
-  color:#cc0000;
-  cursor:pointer;
-}
-
-.vote {
-  margin-top:8px;
-  text-align:center;
-  background:#f1f5ff;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-body.lms .vote { padding:6px; font-size:13px; }
-body.presentation .vote { padding:10px; font-size:16px; }
-
-#addBtn {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  border-radius:50%;
-  border:none;
-  background:#4a6cf7;
-  color:white;
-  cursor:pointer;
-}
-
-body.lms #addBtn {
-  width:55px;
-  height:55px;
-  font-size:24px;
-}
-
-body.presentation #addBtn {
-  width:75px;
-  height:75px;
-  font-size:32px;
-}
-
-#clearBtn {
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  background:#ef4444;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-body.lms #clearBtn {
-  font-size:12px;
-  padding:8px 10px;
-}
-
-body.presentation #clearBtn {
-  font-size:16px;
-  padding:12px 14px;
-}
-
-#modeBtn {
-  position:fixed;
-  top:10px;
-  right:20px;
-  background:#111827;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  padding:6px 10px;
-}
-</style>
-</head>
-
-<body class="lms">
-
-<header>Lecture 1 Discussion Board</header>
-
-<button id="modeBtn" onclick="toggleMode()">Switch Mode</button>
-
-<div id="toolbar">
-  <input id="name" placeholder="Your name">
-  <input id="text" placeholder="Enter your response">
-  <button onclick="addNote()">Post</button>
-</div>
-
-<div id="board"></div>
-
-<button id="addBtn" onclick="toggleInput()">+</button>
-<button id="clearBtn" onclick="clearBoard()">Delete All Notes</button>
-
-<!-- ✅ Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>

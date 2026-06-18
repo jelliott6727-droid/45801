@@ -108,6 +108,10 @@ db.ref("notes").on("child_changed", snap=>{
   if (old) old.remove();
   render(snap.key, snap.val());
 });
+  db.ref("notes").on("child_removed", snap => {
+  const note = document.getElementById(snap.key);
+  if (note) note.remove();
+});
 
 function render(id, data){
   const note = document.createElement("div");

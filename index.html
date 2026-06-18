@@ -19,33 +19,44 @@ header {
   gap:10px;
   padding:10px;
   background:white;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+input {
+  padding:8px;
+}
+
+button {
+  padding:8px 12px;
+  background:#4a6cf7;
+  color:white;
+  border:none;
+  cursor:pointer;
 }
 
 #board {
   position:relative;
-  height:calc(100vh - 120px);
+  height:calc(100vh - 110px);
 }
 
-.note {  
-  position:absolute;  
-  width:240px;  
-  background:white;  
-  padding:12px;  
-  border-radius:16px;  
-  box-shadow:0 6px 18px rgba(0,0,0,0.15);  
-  cursor:move;  
-  transition: transform 0.15s ease, box-shadow 0.15s ease;}.note:hover 
-  {  transform: scale(1.03);  box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+.note {
+  position:absolute;
+  width:220px;
+  background:#fff8a6;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
 .delete {
   float:right;
-  cursor:pointer;
   color:red;
+  cursor:pointer;
 }
 
 .vote {
+  margin-top:8px;
   cursor:pointer;
-  margin-top:5px;
 }
 </style>
 </head>
@@ -57,18 +68,17 @@ header {
 <div id="toolbar">
   <input id="name" placeholder="Your name">
   <input id="text" placeholder="Your idea">
-   <button onclick="addNote()">Add</button>  
+  <button onclick="addNote()">Add</button>
   <button onclick="clearBoard()">Clear Board</button>
 </div>
 
 <div id="board"></div>
 
-<!-- ✅ FIXED script links -->
+<!-- ✅ CORRECT Firebase scripts -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <script>
-// ✅ YOUR CONFIG (already inserted)
 const firebaseConfig = {
   apiKey: "AIzaSyBT9AN4Xmfq0bkfNPZnSstICHQibMgQQA8",
   authDomain: "class-board-45801.firebaseapp.com",
@@ -82,14 +92,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// 🔐 Set your instructor password here
-  // <-- change this!
-
 function addNote() {
   const name = document.getElementById("name").value;
   const text = document.getElementById("text").value;
 
-  if(!name || !text) return alert("Fill in both fields");
+  if(!name || !text) return alert("Fill fields");
 
   db.ref("notes").push({
     name,
@@ -99,81 +106,91 @@ function addNote() {
     votes:0
   });
 
-  document.getElementById("text").value = "";
+  document.getElementById("text").value="";
 }
 
+// ✅ LISTENERS (ALL THREE — THIS FIXES YOUR ISSUE)
 db.ref("notes").on("child_added", snap => render(snap.key, snap.val()));
+
 db.ref("notes").on("child_changed", snap=>{
   const old = document.getElementById(snap.key);
-  if (old) old.remove();
+  if(old) old.remove();
   render(snap.key, snap.val());
 });
-  db.ref("notes").on("child_removed", snap => {
-  const note = document.getElementById(snap.key);
-  if (note) note.remove();
+
+db.ref("notes").on("child_removed", snap=>{
+  const el = document.getElementById(snap.key);
+  if(el) el.remove();
 });
 
-function render(id, data){
+// ✅ RENDER FUNCTION
+function render(id,data){
   const note = document.createElement("div");
   note.className="note";
   note.id=id;
-  note.style.left=data.x+"px";
-  note.style.top=data.y+"px";
+
+  note.style.left = data.x+"px";
+  note.style.top = data.y+"px";
 
   note.innerHTML = `
-  <span class="delete" onclick="event.stopPropagation(); del('${id}')">×</span>
+    <span class="delete" onclick="deleteNote('${id}', event)">×</span>
     <b>${data.name}</b>
     <div>${data.text}</div>
-    <div class="vote" onclick="vote('${id}',${data.votes})">
+    <div class="vote" onclick="vote('${id}', ${data.votes})">
       👍 ${data.votes}
     </div>
   `;
 
-  // drag (updates position live)
-note.onmousedown = function(e) {
+  // ✅ CLEAN DRAG SYSTEM
+  note.onmousedown = function(e){
+    if(e.target.classList.contains("delete")) return;
 
-  // ✅ Prevent dragging when clicking delete button
-  if (e.target.classList.contains("delete")) return;
+    let shiftX = e.clientX - note.offsetLeft;
+    let shiftY = e.clientY - note.offsetTop;
 
-  let shiftX = e.clientX - note.offsetLeft;
-  let shiftY = e.clientY - note.offsetTop;
+    function moveAt(pageX, pageY){
+      note.style.left = pageX - shiftX + "px";
+      note.style.top = pageY - shiftY + "px";
+    }
 
-  function moveAt(pageX, pageY) {
-    note.style.left = pageX - shiftX + 'px';
-    note.style.top = pageY - shiftY + 'px';
-  }
+    function onMouseMove(e){
+      moveAt(e.pageX, e.pageY);
+    }
 
-  function onMouseMove(e) {
-    moveAt(e.pageX, e.pageY);
-  }
+    document.addEventListener("mousemove", onMouseMove);
 
-  document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener("mouseup", function onMouseUp(){
+      document.removeEventListener("mousemove", onMouseMove);
 
-  document.addEventListener('mouseup', function onMouseUp(e) {
-    document.removeEventListener('mousemove', onMouseMove);
+      db.ref("notes/"+id).update({
+        x: note.offsetLeft,
+        y: note.offsetTop
+      });
 
-    // ✅ Save final position to Firebase ONLY after drag ends
-    db.ref("notes/" + id).update({
-      x: note.offsetLeft,
-      y: note.offsetTop
+      document.removeEventListener("mouseup", onMouseUp);
     });
-
-    document.removeEventListener('mouseup', onMouseUp);
-  });
-};
+  };
 
   document.getElementById("board").appendChild(note);
 }
 
+// ✅ DELETE (NO PASSWORD)
+function deleteNote(id, event){
+  event.stopPropagation();
+  db.ref("notes/"+id).remove();
+}
+
+// ✅ VOTE
 function vote(id,v){
   db.ref("notes/"+id).update({votes:v+1});
 }
 
-// 🔐 Instructor-only delete
-function del(id){  db.ref("notes/"+id).remove();}
-
-  function clearBoard(){  if(confirm("Clear all posts?")){    db.ref("notes").remove();  }}
-  
+// ✅ CLEAR BOARD
+function clearBoard(){
+  if(confirm("Clear all posts?")){
+    db.ref("notes").remove();
+  }
+}
 </script>
 
 </body>

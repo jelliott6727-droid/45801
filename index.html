@@ -126,16 +126,37 @@ function render(id, data){
   `;
 
   // drag (updates position live)
-  note.onmousedown = e=>{
-    let ox=e.offsetX, oy=e.offsetY;
-    document.onmousemove = e=>{
-      db.ref("notes/"+id).update({
-        x:e.pageX-ox,
-        y:e.pageY-oy
-      });
-    };
-    document.onmouseup=()=>document.onmousemove=null;
-  };
+note.onmousedown = function(e) {
+
+  // ✅ Prevent dragging when clicking delete button
+  if (e.target.classList.contains("delete")) return;
+
+  let shiftX = e.clientX - note.offsetLeft;
+  let shiftY = e.clientY - note.offsetTop;
+
+  function moveAt(pageX, pageY) {
+    note.style.left = pageX - shiftX + 'px';
+    note.style.top = pageY - shiftY + 'px';
+  }
+
+  function onMouseMove(e) {
+    moveAt(e.pageX, e.pageY);
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  document.addEventListener('mouseup', function onMouseUp(e) {
+    document.removeEventListener('mousemove', onMouseMove);
+
+    // ✅ Save final position to Firebase ONLY after drag ends
+    db.ref("notes/" + id).update({
+      x: note.offsetLeft,
+      y: note.offsetTop
+    });
+
+    document.removeEventListener('mouseup', onMouseUp);
+  });
+};
 
   document.getElementById("board").appendChild(note);
 }

@@ -145,6 +145,9 @@ function vote(id,v){
 
 // 🔐 Instructor-only delete
 function del(id){  db.ref("notes/"+id).remove();}
+
+  function clearBoard(){  if(confirm("Clear all posts?")){    db.ref("notes").remove();  }}
+  
 </script>
 
 </body>

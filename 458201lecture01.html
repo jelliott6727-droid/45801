@@ -2,152 +2,186 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lecture 1 Discussion Board</title>
 
-:wght@300;400;700&display=swap" rel="stylesheet">
+<!-- 🔴 CHANGE THIS (optional, for clarity) -->
+<title>Lecture 1 Board</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
 body {
-  margin: 0;
-  font-family: 'Lato', sans-serif;
-  background: #eef2f7;
+  margin:0;
+  font-family:'Lato', sans-serif;
+  background:#eef2f7;
 }
 
-body.lms {
-  font-size: 14px;
-}
-
-body.presentation {
-  font-size: 18px;
-}
+body.lms { font-size:14px; }
+body.presentation { font-size:18px; }
 
 header {
   background: linear-gradient(135deg, #4a6cf7, #6f8cff);
-  color: white;
-  text-align: center;
-  font-weight: 700;
+  color:white;
+  text-align:center;
+  font-weight:700;
 }
 
+/* 🔴 CHANGE THIS (optional display label) */
 body.lms header {
-  padding: 12px;
-  font-size: 20px;
+  padding:12px;
+  font-size:20px;
 }
 
 body.presentation header {
-  padding: 18px;
-  font-size: 28px;
+  padding:18px;
+  font-size:28px;
 }
 
 #toolbar {
-  display: none;
-  gap: 10px;
-  background: white;
-  padding: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display:none;
+  gap:10px;
+  background:white;
 }
 
+body.lms #toolbar { padding:10px; }
+body.presentation #toolbar { padding:16px; }
+
 input {
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  padding: 8px;
-  width: 100%;
+  border-radius:8px;
+  border:1px solid #ccc;
+  width:100%;
+}
+
+body.lms input {
+  padding:8px;
+  font-size:14px;
+}
+
+body.presentation input {
+  padding:12px;
+  font-size:18px;
 }
 
 button {
-  background: #4a6cf7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 8px 12px;
+  background:#4a6cf7;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+body.lms button {
+  padding:8px 12px;
+  font-size:14px;
+}
+
+body.presentation button {
+  padding:12px 16px;
+  font-size:18px;
 }
 
 #board {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-content: flex-start;
-  padding: 15px;
-  min-height: calc(100vh - 110px);
-  background: #eef2f7;
+  position:relative;
+  height:calc(100vh - 80px);
+  background-image: radial-gradient(#d1d5db 1px, transparent 1px);
 }
+
+body.lms #board { background-size:20px 20px; }
+body.presentation #board { background-size:30px 30px; }
 
 .note {
-  width: 220px;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-  transition: transform 0.15s ease;
+  position:relative;
+  border-radius:12px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.2);
 }
 
-.note:hover {
-  transform: translateY(-2px);
+body.lms .note {
+  width:220px;
+  padding:10px;
 }
 
 body.presentation .note {
-  width: 300px;
-  font-size: 18px;
+  width:300px;
+  padding:16px;
 }
 
 .delete {
-  float: right;
-  color: #cc0000;
-  cursor: pointer;
-  font-size: 16px;
+  float:right;
+  color:#cc0000;
+  cursor:pointer;
 }
 
 .vote {
-  margin-top: 10px;
-  text-align: center;
-  background: #f1f5ff;
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 8px;
+  margin-top:8px;
+  text-align:center;
+  background:#f1f5ff;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.vote:hover {
-  background: #e0e7ff;
-}
-
-.post-name {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.post-text {
-  margin-bottom: 8px;
-}
+body.lms .vote { padding:6px; font-size:13px; }
+body.presentation .vote { padding:10px; font-size:16px; }
 
 #addBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  font-size: 24px;
-  background: #4a6cf7;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  border-radius:50%;
+  border:none;
+  background:#4a6cf7;
+  color:white;
+  cursor:pointer;
+}
+
+body.lms #addBtn {
+  width:55px;
+  height:55px;
+  font-size:24px;
+}
+
+body.presentation #addBtn {
+  width:75px;
+  height:75px;
+  font-size:32px;
 }
 
 #clearBtn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #ef4444;
-  padding: 8px 12px;
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  background:#ef4444;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+body.lms #clearBtn {
+  font-size:12px;
+  padding:8px 10px;
+}
+
+body.presentation #clearBtn {
+  font-size:16px;
+  padding:12px 14px;
 }
 
 #modeBtn {
-  position: fixed;
-  top: 10px;
-  right: 20px;
-  background: #111827;
+  position:fixed;
+  top:10px;
+  right:20px;
+  background:#111827;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  padding:6px 10px;
 }
 </style>
 </head>
 
 <body class="lms">
 
+<!-- 🔴 CHANGE THIS (visible header) -->
 <header>Lecture 1 Discussion Board</header>
 
 <button id="modeBtn" onclick="toggleMode()">Switch Mode</button>
@@ -163,8 +197,9 @@ body.presentation .note {
 <button id="addBtn" onclick="toggleInput()">+</button>
 <button id="clearBtn" onclick="clearBoard()">Delete All Notes</button>
 
-https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js
-https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js
+<!-- ✅ Firebase scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <script>
 const firebaseConfig = {
@@ -180,100 +215,114 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+/* 🔴 🔴 🔴 THIS IS THE MOST IMPORTANT LINE TO CHANGE EACH LECTURE */
 const path = "458201lecture01";
 
-const colors = [
-  "#FFD6E0",
-  "#D6F0FF",
-  "#FFF5BA",
-  "#E8FFD6",
-  "#E6D6FF"
-];
+const colors = ["#FFD6E0","#D6F0FF","#FFF5BA","#E8FFD6","#E6D6FF"];
 
-function toggleMode() {
+function toggleMode(){
   document.body.classList.toggle("presentation");
   document.body.classList.toggle("lms");
 }
 
-function toggleInput() {
-  const toolbar = document.getElementById("toolbar");
-
-  if (toolbar.style.display === "flex") {
-    toolbar.style.display = "none";
-  } else {
-    toolbar.style.display = "flex";
-  }
+function toggleInput(){
+  const bar = document.getElementById("toolbar");
+  bar.style.display = bar.style.display === "flex" ? "none" : "flex";
 }
 
-function addNote() {
-  const name = document.getElementById("name").value.trim();
-  const text = document.getElementById("text").value.trim();
+function addNote(){
+  const name = document.getElementById("name").value;
+  const text = document.getElementById("text").value;
 
-  if (!name || !text) {
-    alert("Please fill in both fields.");
-    return;
-  }
+  if(!name || !text) return alert("Fill fields");
 
   db.ref(path).push({
-    name: name,
-    text: text,
-    votes: 0,
-    color: colors[Math.floor(Math.random() * colors.length)],
-    timestamp: Date.now()
+    name,
+    text,
+    x:200 + Math.random()*200,
+    y:120 + Math.random()*150,
+    votes:0,
+    color: colors[Math.floor(Math.random()*colors.length)]
   });
 
-  document.getElementById("text").value = "";
+  document.getElementById("text").value="";
 }
 
-db.ref(path).on("child_added", snap => {
-  render(snap.key, snap.val());
-});
+db.ref(path).on("child_added", snap => render(snap.key, snap.val()));
 
-db.ref(path).on("child_changed", snap => {
+db.ref(path).on("child_changed", snap=>{
   const old = document.getElementById(snap.key);
-  if (old) old.remove();
+  if(old) old.remove();
   render(snap.key, snap.val());
 });
 
-db.ref(path).on("child_removed", snap => {
-  const note = document.getElementById(snap.key);
-  if (note) note.remove();
+db.ref(path).on("child_removed", snap=>{
+  const el = document.getElementById(snap.key);
+  if(el) el.remove();
 });
 
-function render(id, data) {
+function render(id,data){
   const note = document.createElement("div");
+  note.className="note";
+  note.id=id;
 
-  note.className = "note";
-  note.id = id;
-  note.style.background = data.color || "#ffffff";
+  note.style.left = data.x+"px";
+  note.style.top = data.y+"px";
+  note.style.background = data.color;
 
   note.innerHTML = `
     <span class="delete" onclick="deleteNote('${id}', event)">×</span>
-    <div class="post-name">${data.name}</div>
-    <div class="post-text">${data.text}</div>
-    <div class="vote" onclick="vote('${id}', ${data.votes || 0})">
-      👍 ${data.votes || 0}
+    <b>${data.name}</b>
+    <div>${data.text}</div>
+    <div class="vote" onclick="vote('${id}', ${data.votes})">
+      👍 ${data.votes}
     </div>
   `;
 
-  document.getElementById("board").prepend(note);
+  note.onmousedown = function(e){
+    if(e.target.classList.contains("delete")) return;
+
+    let shiftX = e.clientX - note.offsetLeft;
+    let shiftY = e.clientY - note.offsetTop;
+
+    function moveAt(pageX, pageY){
+      note.style.left = pageX - shiftX + "px";
+      note.style.top = pageY - shiftY + "px";
+    }
+
+    function onMouseMove(e){
+      moveAt(e.pageX, e.pageY);
+    }
+
+    document.addEventListener("mousemove", onMouseMove);
+
+    document.addEventListener("mouseup", function onMouseUp(){
+      document.removeEventListener("mousemove", onMouseMove);
+
+      db.ref(path+"/"+id).update({
+        x: note.offsetLeft,
+        y: note.offsetTop
+      });
+
+      document.removeEventListener("mouseup", onMouseUp);
+    });
+  };
+
+  document.getElementById("board").appendChild(note);
 }
 
-function deleteNote(id, event) {
+function deleteNote(id, event){
   event.stopPropagation();
-  db.ref(path + "/" + id).remove();
+  db.ref(path+"/"+id).remove();
 }
 
-function vote(id, votes) {
-  db.ref(path + "/" + id).update({
-    votes: votes + 1
-  });
+function vote(id,v){
+  db.ref(path+"/"+id).update({votes:v+1});
 }
 
-function clearBoard() {
+function clearBoard(){
   const confirmText = prompt("Type DELETE to remove all notes:");
-
-  if (confirmText === "DELETE") {
+  if(confirmText === "DELETE"){
     db.ref(path).remove();
   }
 }
